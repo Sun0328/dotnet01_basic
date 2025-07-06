@@ -1,4 +1,3 @@
-````markdown
 # dotnet01_basic
 
 A simple .NET project designed to practice build RESTful API for front end.
@@ -147,5 +146,3 @@ By default, the API will be available at `https://localhost:5001`.
 * [EF Core Getting Started](https://docs.microsoft.com/ef/core)
 * [C# Guide](https://docs.microsoft.com/dotnet/csharp)
 
-```
-```
