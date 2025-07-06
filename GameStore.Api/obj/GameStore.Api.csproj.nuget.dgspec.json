@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jialisun/Desktop/Code/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj": {}
+    "/Users/jialisun/Desktop/CODE/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj": {}
   },
   "projects": {
-    "/Users/jialisun/Desktop/Code/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj": {
+    "/Users/jialisun/Desktop/CODE/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jialisun/Desktop/Code/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj",
+        "projectUniqueName": "/Users/jialisun/Desktop/CODE/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj",
         "projectName": "GameStore.Api",
-        "projectPath": "/Users/jialisun/Desktop/Code/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj",
+        "projectPath": "/Users/jialisun/Desktop/CODE/dotnet_GameStore/GameStore.Api/GameStore.Api.csproj",
         "packagesPath": "/Users/jialisun/.nuget/packages/",
-        "outputPath": "/Users/jialisun/Desktop/Code/dotnet_GameStore/GameStore.Api/obj/",
+        "outputPath": "/Users/jialisun/Desktop/CODE/dotnet_GameStore/GameStore.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/jialisun/.nuget/NuGet/NuGet.Config"

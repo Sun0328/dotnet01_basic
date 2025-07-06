@@ -14,6 +14,47 @@ Content-Type: application/json
   "releaseDate": "2022-02-25"
 }
 
+###
+POST http://localhost:5179/games
+Content-Type: application/json
+
+{
+  "name": "Street Fighter VI",
+  "genreId": 1,
+  "price": 49.99,
+  "releaseDate": "2023-06-02"
+}
+###
+POST http://localhost:5179/games
+Content-Type: application/json
+
+{
+  "name": "FIFA 24",
+  "genreId": 3,
+  "price": 69.99,
+  "releaseDate": "2024-09-29"
+}
+###
+POST http://localhost:5179/games
+Content-Type: application/json
+
+{
+  "name": "Forza Horizon 5",
+  "genreId": 4,
+  "price": 39.99,
+  "releaseDate": "2021-11-09"
+}
+###
+POST http://localhost:5179/games
+Content-Type: application/json
+
+{
+  "name": "Mario Party Superstars",
+  "genreId": 5,
+  "price": 59.99,
+  "releaseDate": "2021-10-29"
+}
+
 # 常见错误：字段名称大小写错误（C# 代码是 PascalCase，JSON 需要 camelCase）：
 # {
 #   "Name": "Elden Ring",  // ❌ Name 首字母大写，应该是 name
