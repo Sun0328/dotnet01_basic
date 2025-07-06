@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { format } from 'date-fns';
 import GameEditModal from './GameEditModal';
 import { Game } from '@/app/types/Game';
+import { UpdateGame } from '@/app/types/UpdateGame';
 import { useGameStore } from '@/stores/gameStore';
 import {
   Table,
@@ -16,7 +17,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Trash, Pencil } from 'lucide-react';
 import { log } from 'console';
-import { update } from '@/app/lib/apiClient';
 
 
 export default function GameCard() {
@@ -24,7 +24,7 @@ export default function GameCard() {
   const { games, loading, error, fetchGames, deleteGame, editGame } = useGameStore();
 
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [selectedGame, setSelectedGame] = useState<Game|null>(null);
 
   useEffect(() => {
     fetchGames();
@@ -38,17 +38,8 @@ export default function GameCard() {
     }
   };
 
-  const handleConfirmEdit = async (updatedGame: Game) => {
+  const handleConfirmEdit = async (updatedGame: UpdateGame) => {
     console.log('Confirming edit for game:', updatedGame);
-    
-    const payload = {
-      name: updatedGame.name,
-      genreId: updatedGame.genreId,
-      price: updatedGame.price,
-      releaseDate: updatedGame.releaseDate.toISOString(),
-    }
-    
-    console.log('Payload for edit:', payload);
     await editGame(updatedGame);
   };
   

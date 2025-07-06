@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Genre } from '@/app/types/Genre';
-import { getAllGenres } from '@/app/lib/apiClient';
+import { getAllGenres } from '@/lib/apiClient';
 
 interface GenreState {
   genres: Genre[];
@@ -8,6 +8,7 @@ interface GenreState {
   error: string | null;
   fetchGenres: () => Promise<void>;
   getGenreNameById: (id: number) => string;
+  getGenreIdByName: (name: string) => number;
 }
 
 export const useGenreStore = create<GenreState>((set, get) => ({
@@ -26,8 +27,13 @@ export const useGenreStore = create<GenreState>((set, get) => ({
     }
   },
 
-  getGenreNameById: (id: number) => {
+  getGenreNameById: (id: number) : string => {
     const genre = get().genres.find((g) => g.id === id);
     return genre ? genre.name : '—';
   },
+
+  getGenreIdByName: (name: string): number => {
+    const genre = get().genres.find((g) => g.name.toLowerCase() === name.toLowerCase());
+    return genre ? genre.id : 0;
+  }
 }));

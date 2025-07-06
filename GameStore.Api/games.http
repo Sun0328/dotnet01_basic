@@ -55,16 +55,16 @@ Content-Type: application/json
   "releaseDate": "2021-10-29"
 }
 
-# 常见错误：字段名称大小写错误（C# 代码是 PascalCase，JSON 需要 camelCase）：
+// Common mistake: incorrect field name casing (C# uses PascalCase, JSON requires camelCase):
 # {
-#   "Name": "Elden Ring",  // ❌ Name 首字母大写，应该是 name
-#   "Genre": "RPG",        // ❌ Genre 首字母大写，应该是 genre
-#   "Price": 59.99,        // ❌ Price 首字母大写，应该是 price
-#   "ReleaseDate": "2022-02-25" // ❌ ReleaseDate 首字母大写，应该是 releaseDate
+#   "Name": "Elden Ring",      // ❌ “Name” should be “name”
+#   "Genre": "RPG",            // ❌ “Genre” should be “genre”
+#   "Price": 59.99,            // ❌ “Price” should be “price”
+#   "ReleaseDate": "2022-02-25"// ❌ “ReleaseDate” should be “releaseDate”
 # }
 
 ###
-PUT http://localhost:5179/games/3
+PUT http://localhost:5179/games/9
 Content-Type: application/json
 
 {
@@ -75,4 +75,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5179/games/4
+DELETE http://localhost:5179/games/8

@@ -1,7 +1,7 @@
-export interface Game {
-    id: number;
+export interface UpdateGame {
+    id?: number;
     name: string;
-    genreId: number;
+    genreId?: number;
     genre?: string;
     price: number;
     releaseDate: Date;

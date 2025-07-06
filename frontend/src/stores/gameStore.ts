@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import { Game } from '@/app/types/Game';
-import { getAll, getById, remove, update } from '@/app/lib/apiClient';
+import { UpdateGame } from '@/app/types/UpdateGame';
+import { getAll, getById, remove, update } from '@/lib/apiClient';
 import { useGenreStore } from './genreStore';
 import { toast } from 'sonner'
+import { id } from 'date-fns/locale';
 
 interface GameState {
   games: Game[];
@@ -38,27 +40,27 @@ export const useGameStore = create<GameState>((set) => ({
     }
   },
 
-  editGame: async (updatedGame: Game) => {
+  editGame: async (updatedGame: UpdateGame) => {
     set({ loading: true, error: null });
     try {
-        const savedGame = await update(updatedGame);
+      // Get genreId from genre store
+        const genreId = updatedGame.genre 
+          ? useGenreStore.getState().getGenreIdByName(updatedGame.genre) 
+          : (updatedGame.genreId || 0); // Use existing genreId if genre name is not provided
+        
+        const payload: UpdateGame = {
+          id: updatedGame.id, // Ensure ID is included
+          name: updatedGame.name,
+          genreId: genreId,
+          price: updatedGame.price,
+          releaseDate: updatedGame.releaseDate,
+        }
 
-        // 获取 genre 名字
-        const genreName = useGenreStore.getState().getGenreNameById(savedGame.genreId);
-
-        set((state) => ({
-        games: state.games.map((game) =>
-            game.id === savedGame.id
-            ? {
-                ...savedGame,
-                releaseDate: new Date(savedGame.releaseDate),
-                genre: genreName,
-                }
-            : game
-        ),
-        }));
-
+        const savedGame = await update(payload);
         toast.success(`Game ID ${savedGame.id} updated successfully`);
+        
+        // Refresh the games list to show updated data
+        await useGameStore.getState().fetchGames();
     } catch (err) {
         console.error('Edit error:', err);
         toast.error('Failed to update game');
