@@ -95,6 +95,13 @@ export const useGameStore = create<GameState>((set) => ({
     try {
       const game = await getById(id);
       
+      if (!game) {
+        // Game not found
+        set({ games: [] });
+        toast.error(`No game found with ID ${id}`);
+        return;
+      }
+      
       // get genre name from genre store
       const genreName = useGenreStore.getState().getGenreNameById(game.genreId);  
 
@@ -107,8 +114,9 @@ export const useGameStore = create<GameState>((set) => ({
       });
       toast.success(`Game ID ${id} found`);
     } catch (err) {
-      console.error('Search error:', err);
-      toast.error(`No game found with ID ${id}`);
+      // Handle other errors (network, server errors, etc.)
+      set({ games: [] });
+      toast.error(`Error searching for game with ID ${id}`);
     } finally {
       set({ loading: false });
     }

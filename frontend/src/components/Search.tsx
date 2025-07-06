@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
+import { toast } from 'sonner'
 
 export default function Search() {
   const [searchItem, setSearchItem] = useState<'Id' | 'Genre'>('Id');
@@ -20,28 +21,30 @@ export default function Search() {
   useEffect(() => {
   fetchGenres().then(() => {
       const firstGenre = useGenreStore.getState().genres[0];
-      if (searchItem === 'Genre' && firstGenre) {
+      // Only set the first genre if query is empty (initial load)
+      if (searchItem === 'Genre' && firstGenre && !query) {
       setQuery(firstGenre.name);
       }
   });
-  }, [fetchGenres, searchItem]);
+  }, [fetchGenres, searchItem, query]);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!query.trim()) {
+      await fetchGames();
+      return;
+    }
+
     // Search by Id
     if (searchItem === 'Id') {
-        if (!query.trim()) {
-            await fetchGames();
-            return;
-        }
-
       const id = parseInt(query);
       if (isNaN(id)) {
-        alert('Please enter a valid numeric ID.');
+        toast.error('Please enter a valid numeric ID.');
         return;
       }
       await searchById(id);
+      setQuery('');
     }
 
     // Search by Genre
@@ -64,7 +67,7 @@ export default function Search() {
 
       <div className="flex flex-row items-center gap-2">
         <DropdownMenu>
-          <DropdownMenuTrigger className="border px-6 py-2 whitespace-nowrap rounded-md text-sm">
+          <DropdownMenuTrigger className="bg-gray-100 border px-6 py-2 whitespace-nowrap rounded-md text-sm cursor-pointer hover:bg-gray-200">
             Search By
           </DropdownMenuTrigger>
           <DropdownMenuContent>

@@ -28,9 +28,12 @@ export async function getAllGenres(): Promise<Genre[]> {
 }
 
 // Get a game by ID
-export async function getById(id: number): Promise<Game> {
+export async function getById(id: number): Promise<Game | null> {
   const res = await fetch(`${API_BASE}/games/${id}`);
   if (!res.ok) {
+    if (res.status === 404) {
+      return null; // Return null instead of throwing error
+    }
     throw new Error(`Failed to fetch game with ID ${id}`);
   }
   const game = await res.json();
