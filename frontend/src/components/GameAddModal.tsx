@@ -1,57 +1,53 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { UpdateGame } from '@/app/types/UpdateGame';
+
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { UpdateGame } from '@/app/types/UpdateGame';
-import { Game } from '@/app/types/Game';
 import { useGenreStore } from '@/stores/genreStore';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import DatePicker from './DatePicker';
 
 import { toast } from 'sonner'
 
-interface GameEditModalProps {
+interface GameAddModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  game: Game | null;
   onConfirm: (updated: UpdateGame) => void;
 }
 
 export default function GameEditModal({
   open,
   onOpenChange,
-  game,
   onConfirm,
-}: GameEditModalProps) {
-  const [name, setName] = useState('');
-  const [genre, setGenre] = useState('');
-  const [price, setPrice] = useState('');
+}: GameAddModalProps) {
+  const [name, setName] = useState<string>('');
+  const [genre, setGenre] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
   const [releaseDate, setReleaseDate] = useState<Date | undefined>(undefined);
+
   const { genres, fetchGenres, getGenreIdByName } = useGenreStore();
 
+  // Load genres when modal opens and reset form
   useEffect(() => {
-    if (open && game) {
-      // Reset form with original game data when modal opens
-      setName(game.name);
-      setGenre(game.genre ? game.genre : '');
-      setPrice(game.price.toString());
-      setReleaseDate(new Date(game.releaseDate));
-    }
+    if (open) {
+      // Reset form when modal opens
+      setName('');
+      setGenre('');
+      setPrice('');
+      setReleaseDate(undefined);
 
-    // Load genres if needed
-    if (open && genres.length === 0) {
-      fetchGenres();
+      // Load genres if needed
+      if (genres.length === 0) {
+        fetchGenres();
+      }
     }
-  }, [open, game, genres.length, fetchGenres]);
+  }, [open, genres.length, fetchGenres]);
 
+  // Handle submission of the new game
   const handleSubmit = () => {
-    if (!game) {
-      toast.error('No game selected for editing');
-      return;
-    }
-
     // Validate inputs
     if (!name || !genre || !price || !releaseDate) {
       toast.error('Please fill in all fields');
@@ -70,18 +66,18 @@ export default function GameEditModal({
       return;
     }
 
-    const updatedGame: UpdateGame = {
-      id: game.id,
-      name: name,
+    const newGame: UpdateGame = {
+      name,
       genreId: genreId,
       genre: genre,
       price: parsedPrice,
-      releaseDate: releaseDate,
+      releaseDate: releaseDate as Date
     };
 
-    console.log('Submitting updated game from modal:', updatedGame);
-    onConfirm(updatedGame);
+    console.log('Submitting new game from modal:', newGame);
+    onConfirm(newGame);
 
+    // Form will be reset when modal reopens, so no need to reset here
     onOpenChange(false);
   };
 
@@ -90,7 +86,7 @@ export default function GameEditModal({
       <DialogContent>
 
         <DialogHeader>
-          <DialogTitle>Edit Game</DialogTitle>
+          <DialogTitle>Add New Game</DialogTitle>
         </DialogHeader>
 
         <div className="mt-2 space-y-2">

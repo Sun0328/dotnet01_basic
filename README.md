@@ -1,24 +1,30 @@
-# dotnet01_basic
+# Game Store - Full Stack Application
 
-A simple .NET project designed to practice build RESTful API for front end.
+A modern full-stack game management application built with .NET Core API and Next.js frontend, featuring CRUD operations, search functionality, and a clean, modular architecture.
 
 ---
 
-## Overview
+## 📸 Screenshots
+
+### Overview
+
 ![Game Screenshot](/frontend/public/readme/overview.png)
 
-## Edit
-![Game Screenshot](/frontend/public/readme/edit.png) 
+### Edit Game
 
-## Search Feature (By Id or Genres)
-![Game Screenshot](/frontend/public/readme/searchBy.png) 
-![Game Screenshot](/frontend/public/readme/searchFighting.png) 
+![Game Screenshot](/frontend/public/readme/edit.png)
+
+### Search Feature (By Name or Genres)
+
+![Game Screenshot](/frontend/public/readme/searchBy.png)
+![Game Screenshot](/frontend/public/readme/searchFighting.png)
 
 ## 🖥️ Local Development
 
 Open two terminals and run:
 
 1. **Backend** (API):
+
    ```bash
    cd GameStore.Api
    dotnet run
@@ -42,22 +48,111 @@ dotnet test
 
 ## 🚀 Features
 
-* **RESTful API** built with ASP.NET Core
-* **CRUD operations** (Create, Read, Update, Delete)
-* **Entity Framework Core** integration with SQLite
-* **Clean and minimal** structure for easy understanding
-* **Asynchronous** service methods for scalability
+### Backend (ASP.NET Core)
+
+- **RESTful API** with minimal API endpoints
+- **CRUD operations** (Create, Read, Update, Delete)
+- **Entity Framework Core** integration with SQLite
+- **Data validation** with DTOs and model validation
+- **Asynchronous** operations for scalability
+
+### Frontend (Next.js + TypeScript)
+
+- **Modern React** with TypeScript and Tailwind CSS
+- **State management** with Zustand
+- **Modular architecture** with Actions, Stores, and Utils
+- **Custom components** with shadcn/ui
+- **Search functionality** by name and genre
+- **Form validation** with toast notifications
+- **Responsive design** with clean UI/UX
+
+---
+
+## Project Structure
+
+```
+dotnet_GameStore/
+├── 📁 GameStore.Api/                 # Backend API (.NET Core)
+│   ├── 📁 Controllers/               # API Controllers (if using)
+│   ├── 📁 Data/                      # Database context and configurations
+│   ├── 📁 Dtos/                      # Data Transfer Objects
+│   │   ├── CreateGameDto.cs
+│   │   ├── UpdateGameDto.cs
+│   │   ├── GameSummaryDto.cs
+│   │   └── GameDetailsDto.cs
+│   ├── 📁 Endpoints/                 # Minimal API endpoints
+│   │   ├── GamesEndpoints.cs
+│   │   └── GenreEndpoints.cs
+│   ├── 📁 Entities/                  # Database entities
+│   │   ├── Game.cs
+│   │   └── Genre.cs
+│   ├── 📁 Mapping/                   # Entity-DTO mapping extensions
+│   │   └── GameMapping.cs
+│   ├── 📁 Properties/                # Project properties
+│   ├── Program.cs                    # Application entry point
+│   ├── GameStore.db                  # SQLite database
+│   └── *.http                        # HTTP test files
+│
+├── 📁 GameStore.Api.Tests/           # Backend tests
+│   └── *.cs                          # Test files
+│
+├── 📁 frontend/                      # Frontend application (Next.js)
+│   ├── 📁 public/                    # Static assets
+│   │   └── 📁 readme/                # README screenshots
+│   ├── 📁 src/
+│   │   ├── 📁 app/                   # Next.js app directory
+│   │   │   ├── 📁 types/             # TypeScript type definitions
+│   │   │   │   ├── Game.ts
+│   │   │   │   ├── UpdateGame.ts
+│   │   │   │   └── Genre.ts
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── 📁 components/            # React components
+│   │   │   ├── 📁 ui/                # shadcn/ui components
+│   │   │   ├── GameCard.tsx          # Main game list component
+│   │   │   ├── GameAddModal.tsx      # Add game modal
+│   │   │   ├── GameEditModal.tsx     # Edit game modal
+│   │   │   ├── GameDeleteModal.tsx   # Delete confirmation modal
+│   │   │   ├── DatePicker.tsx        # Custom date picker
+│   │   │   └── Search.tsx            # Search functionality
+│   │   ├── 📁 lib/                   # Utility libraries
+│   │   │   ├── apiClient.ts          # API client functions
+│   │   │   └── utils.ts              # General utilities
+│   │   ├── 📁 stores/                # State management (Zustand)
+│   │   │   ├── 📁 base/              # Base store infrastructure
+│   │   │   │   └── createAsyncStore.ts
+│   │   │   ├── 📁 actions/           # Business logic actions
+│   │   │   │   ├── gameActions.ts
+│   │   │   │   └── genreActions.ts
+│   │   │   ├── gameStore.ts          # Game state management
+│   │   │   ├── genreStore.ts         # Genre state management
+│   │   │   └── README.md             # Store architecture docs
+│   │   └── 📁 utils/                 # Utility functions
+│   │       ├── gameUtils.ts          # Game-specific utilities
+│   │       ├── storeUtils.ts         # Store helper functions
+│   │       └── index.ts              # Utility exports
+│   ├── package.json
+│   ├── tailwind.config.ts
+│   ├── tsconfig.json
+│   └── next.config.js
+│
+├── GameStore.sln                     # Solution file
+└── README.md                         # This file
+```
 
 ---
 
 ## 📚 Purpose
 
-This project aims to:
+This project demonstrates:
 
-1. Practice building APIs using ASP.NET Core
-2. Understand how to connect and interact with a database via EF Core
-3. Learn best practices for code organization in real-world projects
-4. Serve as a personal reference for ongoing .NET learning
+1. **Full-stack development** with .NET Core and Next.js
+2. **Modern frontend architecture** with modular state management
+3. **RESTful API design** with proper data validation
+4. **Database integration** with Entity Framework Core
+5. **TypeScript best practices** and component architecture
+6. **Clean code principles** and separation of concerns
 
 ---
 
@@ -65,8 +160,8 @@ This project aims to:
 
 ### Prerequisites
 
-* [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
-* SQLite (optional, handled via EF Core)
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
+- SQLite (optional, handled via EF Core)
 
 ### Installation
 
@@ -111,13 +206,21 @@ By default, the API will be available at `https://localhost:5001`.
 
 ---
 
-## 🔧 Code Structure
+## 🏗️ Architecture Highlights
 
-* **GameStore.Api/**: ASP.NET Core project hosting the API
-* **GameStore.Api/Controllers**: API controllers and routing
-* **GameStore.Api/Models**: Entity classes and EF Core `DbContext`
-* **GameStore.Api/Dtos**: Data Transfer Objects for requests and responses
-* **GameStore.Api/Services**: Business logic and data access layer
+### Backend Architecture
+
+- **Minimal APIs**: Clean, lightweight endpoint definitions
+- **Entity Framework Core**: Code-first database approach
+- **DTOs**: Proper data transfer object patterns
+- **Mapping Extensions**: Clean entity-DTO transformations
+
+### Frontend Architecture
+
+- **Modular State Management**: Zustand with Actions pattern
+- **Component Composition**: Reusable UI components
+- **Type Safety**: Full TypeScript integration
+- **Custom Hooks**: Encapsulated business logic
 
 ---
 
@@ -131,18 +234,28 @@ By default, the API will be available at `https://localhost:5001`.
 
 ---
 
-## 📈 Next Steps
+## 📈 Future Enhancements
 
-* Add **authentication** and **authorization**
-* Implement **integration tests** for API endpoints
-* Explore **Docker** for containerization
-* Extend with a **frontend** (e.g., React or Blazor)
+- Add **authentication** and **authorization**
+- Implement **integration tests** for API endpoints
+- Add **Docker** containerization
+- Implement **caching** strategies
+- Add **pagination** for large datasets
+- Implement **real-time updates** with SignalR
 
 ---
 
 ## 🎓 Learning Resources
 
-* [Microsoft ASP.NET Core Documentation](https://docs.microsoft.com/aspnet/core)
-* [EF Core Getting Started](https://docs.microsoft.com/ef/core)
-* [C# Guide](https://docs.microsoft.com/dotnet/csharp)
+### Backend
 
+- [Microsoft ASP.NET Core Documentation](https://docs.microsoft.com/aspnet/core)
+- [EF Core Getting Started](https://docs.microsoft.com/ef/core)
+- [C# Guide](https://docs.microsoft.com/dotnet/csharp)
+
+### Frontend
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs)
+- [Zustand Documentation](https://zustand-demo.pmnd.rs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
