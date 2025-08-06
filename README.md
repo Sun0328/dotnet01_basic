@@ -14,10 +14,17 @@ A modern full-stack game management application built with .NET Core API and Nex
 
 ![Game Screenshot](/frontend/public/readme/edit.png)
 
+### Add Game
+
+![Game Screenshot](/frontend/public/readme/add.png)
+
 ### Search Feature (By Name or Genres)
 
-![Game Screenshot](/frontend/public/readme/searchBy.png)
-![Game Screenshot](/frontend/public/readme/searchFighting.png)
+![Game Screenshot](/frontend/public/readme/search.png)
+
+### Delete Game
+
+![Game Screenshot](/frontend/public/readme/delete.png)
 
 ## 🖥️ Local Development
 

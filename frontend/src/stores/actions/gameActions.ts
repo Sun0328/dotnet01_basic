@@ -59,7 +59,7 @@ export class GameActions {
     GameUtils.logGameOperation("Updating game", payload);
 
     const savedGame = await update(payload);
-    toast.success(`Game ID ${savedGame.id} updated successfully`);
+    toast.success(`Game updated successfully`);
     return savedGame;
   }
 
@@ -69,7 +69,7 @@ export class GameActions {
   static async deleteGame(id: number): Promise<boolean> {
     const success = await remove(id);
     if (success) {
-      toast.success(`Game ID ${id} deleted successfully`);
+      toast.success(`Game ID: ${id} deleted successfully`);
     } else {
       toast.error("Failed to delete game on server");
     }

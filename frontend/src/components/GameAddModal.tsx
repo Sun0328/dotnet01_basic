@@ -60,6 +60,11 @@ export default function GameEditModal({
       return;
     }
 
+    if (parsedPrice < 1 || parsedPrice > 100) {
+      toast.error('Price must be between $1 and $100');
+      return;
+    }
+
     const genreId = getGenreIdByName(genre);
     if (!genreId) {
       toast.error('Invalid genre selected');
