@@ -1,5 +1,4 @@
 using GameStore.Api.Entities;
-using GameStore.Api.Dtos;
 using GameStore.Api.Mapping;
 
 namespace GameStore.Api.Tests;
@@ -41,4 +40,4 @@ public class GenreTests
         Assert.Equal(1, genreDto.Id);
         Assert.Equal("Adventure", genreDto.Name);
     }
-} 
+}

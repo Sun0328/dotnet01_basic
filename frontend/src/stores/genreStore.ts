@@ -1,39 +1,39 @@
-import { create } from 'zustand';
-import { Genre } from '@/app/types/Genre';
-import { getAllGenres } from '@/lib/apiClient';
+import { create } from "zustand";
+import { Genre } from "@/app/types/Genre";
+import {
+  createAsyncStore,
+  AsyncStoreState,
+  AsyncStoreActions,
+  executeAsyncOperation,
+} from "./base/createAsyncStore";
+import { GenreActions } from "./actions/genreActions";
 
-interface GenreState {
+interface GenreState extends AsyncStoreState, AsyncStoreActions {
   genres: Genre[];
-  loading: boolean;
-  error: string | null;
   fetchGenres: () => Promise<void>;
   getGenreNameById: (id: number) => string;
   getGenreIdByName: (name: string) => number;
 }
 
-export const useGenreStore = create<GenreState>((set, get) => ({
-  genres: [],
-  loading: false,
-  error: null,
+export const useGenreStore = create<GenreState>(
+  createAsyncStore((set, get) => ({
+    genres: [],
 
-  fetchGenres: async () => {
-    set({ loading: true, error: null });
-    try {
-      const data = await getAllGenres();
-      set({ genres: data, loading: false });
-    } catch (error) {
-      console.error('Failed to fetch genres:', error);
-      set({ error: 'Failed to fetch genres', loading: false });
-    }
-  },
+    fetchGenres: async () => {
+      const genres = await executeAsyncOperation(
+        () => GenreActions.fetchGenres(),
+        get(),
+        "Failed to fetch genres"
+      );
+      if (genres) set({ genres });
+    },
 
-  getGenreNameById: (id: number) : string => {
-    const genre = get().genres.find((g) => g.id === id);
-    return genre ? genre.name : '—';
-  },
+    getGenreNameById: (id: number): string => {
+      return GenreActions.findGenreNameById(get().genres, id);
+    },
 
-  getGenreIdByName: (name: string): number => {
-    const genre = get().genres.find((g) => g.name.toLowerCase() === name.toLowerCase());
-    return genre ? genre.id : 0;
-  }
-}));
+    getGenreIdByName: (name: string): number => {
+      return GenreActions.findGenreIdByName(get().genres, name);
+    },
+  }))
+);

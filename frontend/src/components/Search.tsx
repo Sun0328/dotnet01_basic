@@ -13,20 +13,20 @@ import { Button } from "@/components/ui/button"
 import { toast } from 'sonner'
 
 export default function Search() {
-  const [searchItem, setSearchItem] = useState<'Id' | 'Genre'>('Id');
+  const [searchItem, setSearchItem] = useState<'Name' | 'Genre'>('Name');
   const [query, setQuery] = useState('');
-  const { searchById, searchByGenre , fetchGames } = useGameStore();
+  const { searchByName, searchByGenre, fetchGames } = useGameStore();
   const { genres, fetchGenres } = useGenreStore();
 
   useEffect(() => {
-  fetchGenres().then(() => {
+    fetchGenres().then(() => {
       const firstGenre = useGenreStore.getState().genres[0];
-      // Only set the first genre if query is empty (initial load)
-      if (searchItem === 'Genre' && firstGenre && !query) {
-      setQuery(firstGenre.name);
+      // Set the first genre when switching to Genre search
+      if (searchItem === 'Genre' && firstGenre) {
+        setQuery(firstGenre.name);
       }
-  });
-  }, [fetchGenres, searchItem, query]);
+    });
+  }, [fetchGenres, searchItem]); // Remove query from dependencies
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,29 +36,28 @@ export default function Search() {
       return;
     }
 
-    // Search by Id
-    if (searchItem === 'Id') {
-      const id = parseInt(query);
-      if (isNaN(id)) {
-        toast.error('Please enter a valid numeric ID.');
+    // Search by Name
+    if (searchItem === 'Name') {
+      const gameName = query.trim();
+      if (!gameName) {
+        toast.error('Please enter a game name to search.');
         return;
       }
-      await searchById(id);
+      await searchByName(gameName);
       setQuery('');
     }
 
     // Search by Genre
     if (searchItem === 'Genre') {
-        
       const genreName = query.trim();
 
       if (genreName === 'all') {
         await fetchGames();
         return;
       }
-      await searchByGenre(genreName); 
+      await searchByGenre(genreName);
     }
-    
+
   };
 
   return (
@@ -72,25 +71,31 @@ export default function Search() {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem
-                onSelect={() => setSearchItem('Id')}
-                className={searchItem === 'Id' ? 'bg-gray-100' : ''}
+              onSelect={() => {
+                setSearchItem('Name');
+                setQuery(''); // Clear query when switching to Name search
+              }}
+              className={searchItem === 'Name' ? 'bg-gray-100' : ''}
             >
-                Id
+              Name
             </DropdownMenuItem>
             <DropdownMenuItem
-                onSelect={() => setSearchItem('Genre')}
-                className={searchItem === 'Id' ? '' : 'bg-gray-100'}
+              onSelect={() => {
+                setSearchItem('Genre');
+                setQuery(''); // Clear query when switching to Genre search
+              }}
+              className={searchItem === 'Genre' ? 'bg-gray-100' : ''}
             >
-                Genre
+              Genre
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
         <form className="flex items-center gap-2" onSubmit={handleSearch}>
-          {searchItem === 'Id' ? (
+          {searchItem === 'Name' ? (
             <Input
-              type="number"
-              placeholder="Enter ID"
+              type="text"
+              placeholder="Enter game name"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-full max-w-sm"
