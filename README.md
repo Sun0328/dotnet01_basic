@@ -44,12 +44,29 @@ Open two terminals and run:
    npm run dev
    ```
 
-To run your test suite for the API:
+## 🧪 Testing
+
+This project includes comprehensive test suites for both frontend and backend components.
+
+### Backend Tests
 
 ```bash
-cd GameStore.Api
+cd GameStore.Api.Tests
 dotnet test
 ```
+
+**Coverage**: 12 unit tests covering entity operations, database interactions, and DTO mappings.  
+**Details**: See [Backend Testing Guide](GameStore.Api.Tests/README_TESTS.md)
+
+### Frontend Tests
+
+```bash
+cd frontend
+npm test
+```
+
+**Coverage**: 47 tests including component tests, API client tests, and utility function tests.  
+**Details**: See [Frontend Testing Guide](frontend/README_TESTS.md)
 
 ---
 
@@ -62,6 +79,7 @@ dotnet test
 - **Entity Framework Core** integration with SQLite
 - **Data validation** with DTOs and model validation
 - **Asynchronous** operations for scalability
+- **Unit testing** with xUnit and in-memory database
 
 ### Frontend (Next.js + TypeScript)
 
@@ -72,6 +90,7 @@ dotnet test
 - **Search functionality** by name and genre
 - **Form validation** with toast notifications
 - **Responsive design** with clean UI/UX
+- **Comprehensive testing** with Jest and React Testing Library
 
 ---
 
@@ -100,13 +119,23 @@ dotnet_GameStore/
 │   ├── GameStore.db                  # SQLite database
 │   └── *.http                        # HTTP test files
 │
-├── 📁 GameStore.Api.Tests/           # Backend tests
-│   └── *.cs                          # Test files
+├── 📁 GameStore.Api.Tests/           # Backend tests (xUnit)
+│   ├── GameTests.cs                  # Game entity tests
+│   ├── GenreTests.cs                 # Genre entity tests
+│   ├── DatabaseTests.cs             # Database operation tests
+│   ├── GamesEndpointsTests.cs        # API endpoint tests
+│   ├── GenreEndpointsTests.cs        # Genre API tests
+│   └── README_TESTS.md               # Testing documentation
 │
 ├── 📁 frontend/                      # Frontend application (Next.js)
 │   ├── 📁 public/                    # Static assets
 │   │   └── 📁 readme/                # README screenshots
 │   ├── 📁 src/
+│   │   ├── 📁 __tests__/             # Frontend tests (Jest)
+│   │   │   ├── 📁 components/        # Component tests
+│   │   │   ├── 📁 lib/               # API client tests
+│   │   │   ├── 📁 utils/             # Utility function tests
+│   │   │   └── simple.test.ts        # Basic functionality tests
 │   │   ├── 📁 app/                   # Next.js app directory
 │   │   │   ├── 📁 types/             # TypeScript type definitions
 │   │   │   │   ├── Game.ts
@@ -142,7 +171,8 @@ dotnet_GameStore/
 │   ├── package.json
 │   ├── tailwind.config.ts
 │   ├── tsconfig.json
-│   └── next.config.js
+│   ├── next.config.js
+│   └── README_TESTS.md               # Frontend testing documentation
 │
 ├── GameStore.sln                     # Solution file
 └── README.md                         # This file

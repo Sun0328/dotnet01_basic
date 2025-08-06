@@ -30,3 +30,6 @@ app.MapGenreEndpoints();
 await app.MigrateDbAsync();
 
 app.Run();
+
+// Make Program class accessible for testing
+public partial class Program { }
